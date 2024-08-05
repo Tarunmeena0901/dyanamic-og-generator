@@ -1,52 +1,98 @@
 import { Request, Response } from "express";
-import { Browser, Page } from "puppeteer";
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-const puppeteer = require('puppeteer');
 
 const app = express();
 const port = 5000;
 
-app.use(cors())
-app.use(express.json)
+app.use(cors());
+app.use(bodyParser.json());
 
-app.get('/ogImage', async (req: Request, res: Response) => {
+app.post('/api/generate', (req: Request, res: Response) => {
+  const { title, description, imageUrl } = req.body;
+  const params = new URLSearchParams;
+  params.append("title", title);
+  params.append("description", description);
+  params.append("imageUrl", imageUrl);
 
-    const { title, content, image } = req.query;
+  const generatedUrl = `http://localhost:5000/og-image?${params.toString()}`;
 
-    const browser: Browser = await puppeteer.launch();
-    const page: Page = await browser.newPage();
+  res.json({ generatedUrl });
+});
 
-    const html = `
-    <html>
-      <head>
-        <style>
-          body { font-family: Arial, sans-serif; }
-          .container { width: 1200px; height: 630px; padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f3f4f6; }
-          .title { font-size: 48px; font-weight: bold; text-align: center; margin-bottom: 20px; }
-          .content { font-size: 24px; text-align: center; }
-          .image { margin-top: 20px; max-width: 100%; max-height: 300px; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="title">${title}</div>
-          <div class="content">${content}</div>
-          ${image ? `<img class="image" src="${image}" />` : ''}
-        </div>
-      </body>
-    </html>
+app.get('/og-image', (req: Request, res: Response) => {
+  const { title, description, imageUrl } = req.query;
+
+  const html = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${description}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="${imageUrl}">
+    <title>${title}</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px; /* Increased padding for the container */
+        border-radius: 8px; /* Optional: rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: shadow for a subtle 3D effect */
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 10px; /* Padding below the header */
+        border-bottom: 1px solid #ddd; /* Optional: border below the header */
+      }
+      .image-container {
+        width: 100%;
+        height: auto;
+        padding-top: 10px; /* Padding above the image */
+      }
+      .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .description {
+        padding: 10px 0; /* Padding around the description text */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="../../assets/logo3.svg">
+        <span>${title}</span>
+      </div>
+      <div class="description">${description}</div>
+      <div class="image-container">
+        <img src="${imageUrl}">
+      </div>
+    </div>
+  </body>
+</html>
   `;
 
-  await page.setContent(html);
-  const screenshotBuffer = await page.screenshot({type: "jpeg"});
-  browser.close();
-
-  res.setHeader('Content-Type', 'image/jpeg');
-  res.send(screenshotBuffer)
-})
+  res.send(html);
+});
 
 app.listen(port, () => {
-    console.log(`Backend server running at http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
