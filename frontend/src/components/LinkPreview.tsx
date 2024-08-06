@@ -4,7 +4,7 @@ export function LinkPreview({ url }: { url: string }) {
     const generatedHtml = useFetchHTML(url);
 
     return (
-        <div className="h-[60vh] w-[80vh] border-2 border-neutral-700 rounded-lg overflow-hidden bg-neutral-900">
+        <div className="h-[60vh] w-[80vh] flex border-2 border-neutral-700 rounded-lg overflow-hidden bg-neutral-900">
             <iframe
                 title="Preview"
                 srcDoc={generatedHtml}
