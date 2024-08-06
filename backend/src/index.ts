@@ -17,7 +17,7 @@ app.post('/generate', (req: Request, res: Response) => {
   params.append("description", description);
   params.append("imageUrl", imageUrl);
 
-  const generatedUrl = `http://${process.env.SERVER_URL}/api/og-image?${params.toString()}`;
+  const generatedUrl = `http://ec2-16-170-203-252.eu-north-1.compute.amazonaws.com/api/og-image?${params.toString()}`;
 
   res.json({ generatedUrl });
 });

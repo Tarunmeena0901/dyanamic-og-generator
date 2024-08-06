@@ -25,3 +25,4 @@ backend/*.njsproj
 backend/*.sln
 backend/*.sw?
 backend/dist/
+backend/.env
