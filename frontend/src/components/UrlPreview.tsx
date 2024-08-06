@@ -1,7 +1,9 @@
+import { InputField } from "./InputField";
+
 export function UrlPreview({generatedUrl} : {generatedUrl : string}){
     return(
         generatedUrl && (
-            <div className='w-2/3 h-[13vh] p-2 flex flex-col justify-between items-center border-2 border-black bg-neutral-900 text-white rounded'>
+            <div className='w-2/3 h-[20vh] p-2 flex flex-col justify-between items-center border-2 border-black bg-neutral-900 text-white rounded'>
                 <div className='w-full flex justify-between items-center'>
                     <span className="font-semibold">Generated URL:</span>
                     <button
@@ -11,9 +13,14 @@ export function UrlPreview({generatedUrl} : {generatedUrl : string}){
                         Copy
                     </button>
                 </div>
-                <p className="block w-full line-clamp-5 text-sm" >
+                <InputField
+                    onInputChange={()=>{}}
+                    value={generatedUrl}
+                    placeholder=""
+                />
+                {/* <p className="block w-full line-clamp-5 text-sm" >
                     {generatedUrl}
-                </p>
+                </p> */}
             </div>
         )
     )
