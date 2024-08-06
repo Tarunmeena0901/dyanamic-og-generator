@@ -1,5 +1,4 @@
-**on the frontend **
-
+**frontend**
 first fill the form
 - title : title of your post
 - description : the text content you want in you post
