@@ -10,14 +10,14 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/api/generate', (req: Request, res: Response) => {
+app.post('/generate', (req: Request, res: Response) => {
   const { title, description, imageUrl } = req.body;
   const params = new URLSearchParams;
   params.append("title", title);
   params.append("description", description);
   params.append("imageUrl", imageUrl);
 
-  const generatedUrl = `http://localhost:5000/og-image?${params.toString()}`;
+  const generatedUrl = `http://${process.env.SERVER_URL}/api/og-image?${params.toString()}`;
 
   res.json({ generatedUrl });
 });
@@ -98,5 +98,5 @@ app.get('/og-image', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running`);
 });

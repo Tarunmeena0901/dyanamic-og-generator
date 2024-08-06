@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { InputField } from './InputField';
 import { UrlPreview } from './UrlPreview';
+import dotenv from "dotenv"
+
+dotenv.config()
+
 
 export function PostCard({ generatedUrl, setGeneratedUrl }: {
     generatedUrl: string,
@@ -12,7 +16,7 @@ export function PostCard({ generatedUrl, setGeneratedUrl }: {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/generate', {
+        const response = await fetch(`http://${process.env.SERVER_URL}/api/generate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
