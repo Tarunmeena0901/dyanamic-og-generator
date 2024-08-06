@@ -16,7 +16,7 @@ export function PostCard({ generatedUrl, setGeneratedUrl }: {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const response = await fetch(`http://${process.env.SERVER_URL}/api/generate`, {
+        const response = await fetch(`http://ec2-16-170-203-252.eu-north-1.compute.amazonaws.com/api/generate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
