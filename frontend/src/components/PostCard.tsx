@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { InputField } from './InputField';
 import { UrlPreview } from './UrlPreview';
-import dotenv from "dotenv"
-
-dotenv.config()
-
 
 export function PostCard({ generatedUrl, setGeneratedUrl }: {
     generatedUrl: string,
