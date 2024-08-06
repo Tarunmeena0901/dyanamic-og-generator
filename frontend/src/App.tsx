@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { PostPage } from "./pages/PostPage"
+import { HeroSection } from "./sections/HeroSection"
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PostPage />} />
+        <Route path="/" element={<HeroSection />} />
       </Routes>
     </BrowserRouter>
   )
