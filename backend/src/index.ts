@@ -86,9 +86,9 @@ app.get('/og-image', (req: Request, res: Response) => {
           <span>${title}</span>
         </div>
         <div class="description">${description}</div>
-        <div class="image-container">
+        ${imageUrl ?  `<div class="image-container">
           <img src="${imageUrl}" >
-        </div>
+        </div>` : ''}
       </div>
     </body>
   </html>
